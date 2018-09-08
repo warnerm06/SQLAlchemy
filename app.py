@@ -7,7 +7,7 @@ from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify
 
-engine = create_engine("sqlite:///Resources/hawaii.sqlite")
+engine = create_engine("sqlite:///Resources/hawaii.sqlite",connect_args={'check_same_thread': False})
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -62,7 +62,7 @@ def tobs():
     
     results = session.query(Measurement.tobs)\
                             .filter(Measurement.date>"2016-08-22").all()
-    return jsonify(results)
+    return len(results)#jsonify(results)
 
 @app.route("/api/v1.0/<start>/")
 def startt(start):
